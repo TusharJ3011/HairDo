@@ -31,6 +31,7 @@ local.properties
 *.iml
 *.hprof
 .cxx/
+app/release
 
 # node.js
 #
@@ -42,7 +43,7 @@ yarn-error.log
 buck-out/
 \.buckd/
 *.keystore
-!debug.keystore
+# !debug.keystore
 
 # fastlane
 #
@@ -62,3 +63,5 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+
+android/app/release
