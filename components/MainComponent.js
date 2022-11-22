@@ -8,26 +8,34 @@ import { HomeScreen } from '../screens/HomeScreen/HomeScreen';
 import { AccountScreen } from '../screens/AccountScreen/AccountScreen';
 import { AboutScreen } from '../screens/AccountScreen/AboutScreen';
 import { BookingScreen } from '../screens/AccountScreen/BookingScreen';
+import { OfferScreen } from '../screens/OffersScreen/OfferScreen';
+import { AvailOfferScreen } from '../screens/OffersScreen/AvailOfferScreen';
+// import {BookingDetailsScreen} from '../screens/AcountScreen.BookingDetailsScreen'
 
-const MainStack = createStackNavigator();
 export const MainContainer = () => {
-    return(
-        <NavigationContainer>
-            <MainStack.Navigator initialRouteName='home'
-            screenOptions={{
-            presentation:'modal',
-            // gestureEnabled:true,
-            headerStyle:{
-                backgroundColor:'white',
-                borderBottomColor:'#1798c7',
-                borderBottomWidth:3,
-            },
-            }}>
-                <MainStack.Screen name="home" component={HomeScreen}/>
-                <MainStack.Screen name="account" component={AccountScreen}/>
-                <MainStack.Screen name="about" component={AboutScreen}/>
-                <MainStack.Screen name="booking" component={BookingScreen}/>
-            </MainStack.Navigator>
-        </NavigationContainer>
+    const MainStack = createStackNavigator();
+    return (
+        // <NavigationContainer>
+        <MainStack.Navigator initialRouteName='Home'
+        screenOptions={{
+        presentation:'modal',
+        // gestureEnabled:true,
+        headerStyle:{
+            backgroundColor:'white',
+            borderBottomColor:'#1798c7',
+            borderBottomWidth:3,
+        },
+        }}
+        >
+            <MainStack.Screen name="Home" component={HomeScreen} />
+            <MainStack.Screen name="Account" component={AccountScreen} />
+            <MainStack.Screen name="About" component={AboutScreen} />
+            <MainStack.Screen name="Booking" component={BookingScreen} />
+            {/* <MainStack.Screen name="Booking Details" component={BookingDetailsScreen} /> */}
+            <MainStack.Screen name="Offers" component={OfferScreen} />
+            <MainStack.Screen name="Avail Offer" component={AvailOfferScreen} />
+
+        </MainStack.Navigator>
+        // </NavigationContainer>
     );
 }

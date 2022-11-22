@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView, Platform, TouchableOpacity } from 'react-native';
 import { useContext, useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 
-export const HomeScreen = () => {
+export const HomeScreen = ({navigation}) => {
     const Item = () => {
         return (
-            <Pressable style={[styles.shopContainer, styles.boxShadow]}>
+            <Pressable style={[styles.shopContainer, styles.boxShadow]}
+                onPress={()=>(navigation.navigate('Offers'))}
+            >
                 <Image source={require("../../assets/images/home/shopglobal.png")} style={styles.shopImage}/>
                 <View style={styles.shopInfoContainer}>
                     <View style={styles.shopInfoSubContainer}>
@@ -26,7 +28,7 @@ export const HomeScreen = () => {
         <View style={styles.container}>
             <ScrollView>
                 <Pressable style={styles.pressButton} 
-                // onPress={()=>(navigation.navigate('OutOfStock'))}
+                onPress={()=>(navigation.navigate('Offers'))}
                 >
                     <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['rgba(23, 152, 199, 1)', 'rgba(26, 245, 232, 0.31)']} style={styles.linearGradient}>
                         <Text style={styles.pressText}>Offers</Text>
