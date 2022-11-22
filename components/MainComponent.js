@@ -10,7 +10,7 @@ import { AboutScreen } from '../screens/AccountScreen/AboutScreen';
 import { BookingScreen } from '../screens/AccountScreen/BookingScreen';
 
 const MainStack = createStackNavigator();
-const MainContainer = () => {
+export const MainContainer = () => {
     return(
         <NavigationContainer>
             <MainStack.Navigator initialRouteName='home'
@@ -23,14 +23,6 @@ const MainContainer = () => {
                 borderBottomWidth:3,
             },
             }}>
-                {/* <MainStack.Screen name="HomeMain" component={HomeScreen} options={{
-                    headerShown:true,
-                    headerTitle:"Rajeev Iron Traders",
-                    headerTitleStyle:{
-                        color:"#1798c7",
-                        fontSize: 28,
-                    }
-                }}/> */}
                 <MainStack.Screen name="home" component={HomeScreen}/>
                 <MainStack.Screen name="account" component={AccountScreen}/>
                 <MainStack.Screen name="about" component={AboutScreen}/>
@@ -39,5 +31,3 @@ const MainContainer = () => {
         </NavigationContainer>
     );
 }
-
-export default MainContainer;

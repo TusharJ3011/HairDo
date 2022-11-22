@@ -25,7 +25,10 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import MainContainer from './components/MainComponent';
+import {MainContainer} from './components/MainComponent';
+import { HomeScreen } from './screens/HomeScreen/HomeScreen';
+import { OfferScreen } from './screens/OffersScreen/OfferScreen';
+import { AvailOfferScreen } from './screens/OffersScreen/AvailOfferScreen';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
@@ -64,7 +67,7 @@ const App = () => {
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <MainContainer />
+      <AvailOfferScreen />
     </SafeAreaView>
   );
 };

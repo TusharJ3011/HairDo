@@ -4,7 +4,6 @@ import { useContext, useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 
-
 export const HomeScreen = () => {
     const Item = () => {
         return (
