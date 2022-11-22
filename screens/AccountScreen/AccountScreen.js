@@ -5,22 +5,41 @@ import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 
 
-export const AccountScreen = () => {
+export const AccountScreen = ({navigation}) => {
+    let user = '20ucs211';
+    let temp = {_data:{name: '',
+                email:"",
+                phone:''}};
+    const [userData, setUserData] = useState(temp);
+    const getUserData = async() => {
+        let user_data = await firestore().collection('users').doc(user).get();
+        console.log(user_data);
+        if (user_data._exists){
+            setUserData(user_data)
+        }
+    }
+
+    useEffect(()=>{
+        getUserData();
+    }, [])
+
     return (
         <View style={styles.container}>
             <ScrollView>
                 <Pressable style={[styles.userContainer, styles.boxShadow]}>
                     <Image source={require("../../assets/images/account/userglobal.png")} style={styles.userImage}/>
                     <View style={styles.userInfoContainer}>
-                        <Text style={styles.userInfoTitle}>Tushar Jain</Text>
-                        <Text style={styles.userInfoSubTitle}>jtushar3011@gmail.com</Text>
-                        <Text style={styles.userInfoSubTitle}>+91-6350290184</Text>
+                        <Text style={styles.userInfoTitle}>{userData._data.name}</Text>
+                        <Text style={styles.userInfoSubTitle}>{userData._data.email}</Text>
+                        <Text style={styles.userInfoSubTitle}>+91-{userData._data.phone}</Text>
                         <Pressable><Text style={styles.userInfoLink}>Edit Profile</Text></Pressable>
                     </View>
                 </Pressable>
 
                 <View style={styles.multiButtonBox}>
-                    <Pressable style={[styles.multiButtonContainer, styles.boxShadow]}>
+                    <Pressable style={[styles.multiButtonContainer, styles.boxShadow]}
+                    onPress={()=>{navigation.navigate("Bookings", {"data":userData._data.bookings})}}
+                    >
                         <Image source={require("../../assets/images/account/userglobal.png")} style={styles.multiButtonImage}/>
                         <Text style={styles.multiButtonTitle}>Bookings</Text>
                     </Pressable>
@@ -30,7 +49,9 @@ export const AccountScreen = () => {
                         <Text style={styles.multiButtonTitle}>Settings</Text>
                     </Pressable>
 
-                    <Pressable style={[styles.multiButtonContainer, styles.boxShadow]}>
+                    <Pressable style={[styles.multiButtonContainer, styles.boxShadow]}
+                    onPress={()=>{navigation.navigate("About")}}
+                    >
                         <Image source={require("../../assets/images/account/userglobal.png")} style={styles.multiButtonImage}/>
                         <Text style={styles.multiButtonTitle}>About</Text>
                     </Pressable>

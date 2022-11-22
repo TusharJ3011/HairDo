@@ -5,20 +5,34 @@ import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 
 
-export const BookingScreen = () => {
+export const BookingScreen = ({route, navigation}) => {
+    let booking_data = []
+    route.params?.data.map((item)=>{
+        var itemTemp = item;
+        var bookDate = new Date(item.date.seconds*1000);
+        console.log(bookDate);
+        var bookDateStr = bookDate.getDate() + "-" + bookDate.getMonth() + "-" + bookDate.getFullYear() + " at " + bookDate.getHours() + ":" + bookDate.getMinutes();
+        console.log(bookDateStr);
+        itemTemp.date = bookDateStr;
+        booking_data.push(itemTemp)
+    });
+    console.log(booking_data);
+
     return (
         <View style={styles.container}>
             <ScrollView>
-                <Pressable style={[styles.otherButtonContainer, styles.boxShadow]}>
+                {booking_data.map((item)=>{
+                return(<Pressable style={[styles.otherButtonContainer, styles.boxShadow]} key={item.shopname+item.shopid}>
                     <View style={styles.otherButtonSubContainer}>
                         <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
                         <View>
-                            <Text style={styles.otherButtonTitle}>Barber Shop</Text>
-                            <Text style={styles.otherButtonSubTitle}>11th November 2022</Text>
+                            <Text style={styles.otherButtonTitle}>{item.shopname}</Text>
+                            <Text style={styles.otherButtonSubTitle}>{item.date}</Text>
                         </View>
                     </View>
                     <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
-                </Pressable>            
+                </Pressable>)   
+                })}         
             </ScrollView>
         </View>
     )

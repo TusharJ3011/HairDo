@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 
 
-export const AboutScreen = () => {
+export const AboutScreen = ({navigation}) => {
     return (
         <View style={styles.container}>
             <ScrollView>

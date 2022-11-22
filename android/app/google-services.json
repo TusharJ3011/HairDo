@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "694605010149",
+    "project_id": "barber-automation-system",
+    "storage_bucket": "barber-automation-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694605010149:android:59723075f7a4d9314eb00c",
+        "android_client_info": {
+          "package_name": "com.hairdo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694605010149-61g9h8frua88elncb0bo0ilpf63npc5k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4gUZQGOaXJsnbXfLR6wyxosZ6mOHOGd8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694605010149-61g9h8frua88elncb0bo0ilpf63npc5k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

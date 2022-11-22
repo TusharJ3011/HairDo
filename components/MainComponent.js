@@ -16,7 +16,7 @@ export const MainContainer = () => {
     const MainStack = createStackNavigator();
     return (
         // <NavigationContainer>
-        <MainStack.Navigator initialRouteName='Home'
+        <MainStack.Navigator initialRouteName='Account'
         screenOptions={{
         presentation:'modal',
         // gestureEnabled:true,
@@ -30,7 +30,7 @@ export const MainContainer = () => {
             <MainStack.Screen name="Home" component={HomeScreen} />
             <MainStack.Screen name="Account" component={AccountScreen} />
             <MainStack.Screen name="About" component={AboutScreen} />
-            <MainStack.Screen name="Booking" component={BookingScreen} />
+            <MainStack.Screen name="Bookings" component={BookingScreen} />
             {/* <MainStack.Screen name="Booking Details" component={BookingDetailsScreen} /> */}
             <MainStack.Screen name="Offers" component={OfferScreen} />
             <MainStack.Screen name="Avail Offer" component={AvailOfferScreen} />
