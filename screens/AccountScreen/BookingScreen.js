@@ -37,7 +37,11 @@ export const BookingScreen = ({navigation}) => {
         <View style={styles.container}>
             <ScrollView>
                 {booking_data.map((item)=>{
-                return(<Pressable style={[styles.otherButtonContainer, styles.boxShadow]} key={item.shopname+item.shopid}>
+                return(<Pressable style={[styles.otherButtonContainer, styles.boxShadow]} key={item.shopname+item.shopid}
+                onPress={()=>{
+                    navigation.navigate("Booking Details", {shopname:item.shopname, date:item.date, price:item.price, services:item.services})
+                }}
+                >
                     <View style={styles.otherButtonSubContainer}>
                         <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
                         <View>

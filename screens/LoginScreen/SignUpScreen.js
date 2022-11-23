@@ -37,6 +37,10 @@ export const SignUpScreen = ({route, navigation}) => {
         })
         .then(() => {
           ToastAndroid.show("User successfully Signed Up", ToastAndroid.SHORT);
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'Home'}],
+          });
         });
     }else{
       ToastAndroid.show("Please fill the form!", ToastAndroid.SHORT);
@@ -95,6 +99,9 @@ export const SignUpScreen = ({route, navigation}) => {
       </View>
       <TouchableOpacity
         style={styles.saveBtn}
+        onPress={()=>{
+          signUpUser();
+        }}
       >
         <Text style={styles.saveText}>Save Changes</Text>
       </TouchableOpacity>

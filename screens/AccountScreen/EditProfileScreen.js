@@ -13,6 +13,35 @@ export const EditProfileScreen = () => {
   const [gender, setGender] = useState('')
   const [address, setAddress] = useState('')
 
+  const EditUser = async () => {
+    let user_data = await firestore().collection('users').doc(userroll).get();
+    if (user_data._exists){
+      let user_data_clone = user_data._data;
+      if (name !== '' && address !== '' && accType !== '' && gender !== '' && phno !== '' && email !== ''){
+        user_data_clone.name = name;
+        user_data_clone.phone = phone;
+        user_data_clone.address = address;
+        user_data_clone.gender = gender;
+        user_data_clone.phno = phno;
+        user_data_clone.email = email;
+        firestore()
+          .collection('users')
+          .doc(userroll)
+          .set(user_data_clone)
+          .then(() => {
+            ToastAndroid.show("Profile Edited", ToastAndroid.SHORT);
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'Home'}],
+            });
+          });
+      }else{
+        ToastAndroid.show("Please fill the form!", ToastAndroid.SHORT);
+      }
+    }
+    ToastAndroid.show("An error occured. Try again later!", ToastAndroid.SHORT);
+  }
+
   return (
     <View style={styles.container}>
       <Image source={{uri:globalContext.userPic}} style={styles.userPic} />
@@ -57,6 +86,9 @@ export const EditProfileScreen = () => {
       </View>
       <TouchableOpacity
         style={styles.saveBtn}
+        onPress={()=>{
+          EditUser();
+        }}
       >
         <Text style={styles.saveText}>Save Changes</Text>
       </TouchableOpacity>

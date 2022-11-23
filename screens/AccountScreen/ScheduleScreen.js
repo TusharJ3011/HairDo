@@ -34,7 +34,12 @@ export const ScheduleScreen = ({route, navigation}) => {
         <View style={styles.container}>
             <ScrollView>
                 {data.map((item)=>{
-                return(<Pressable style={[styles.otherButtonContainer, styles.boxShadow]} key={item.shopname+item.shopid}>
+                return(
+                <Pressable style={[styles.otherButtonContainer, styles.boxShadow]} key={item.shopname+item.shopid}
+                onPress={()=>{
+                    navigation.navigate("Schedule Details", {name:item[1].name, phone:item[1].phone, price:item[1].price, services:item[1].services, time:item[0]})
+                }}
+                >
                     <View style={styles.otherButtonSubContainer}>
                         <View>
                             <Text style={styles.otherButtonTitle}>{item[0]}</Text>

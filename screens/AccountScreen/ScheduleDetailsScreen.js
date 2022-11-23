@@ -5,13 +5,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 import { _signIn } from '../../components/FirebaseAuth';
 
-export const BookingDetailsScreen = ({route, navigation}) => {
+export const ScheduleDetailsScreen = ({route, navigation}) => {
     const data = route.params;
     console.log(data);
 
     useEffect(()=>{
         navigation.setOptions({
-            headerTitle: data.shopname,
+            headerTitle: data.date,
         });
     }, []);
 
@@ -35,9 +35,9 @@ export const BookingDetailsScreen = ({route, navigation}) => {
             <ScrollView>
                 <View style={[styles.shopContainer]}>
                     <View style={styles.shopInfoContainer}>
-                        <Text style={styles.shopInfoTitle}>{data.shopname}</Text>
+                        <Text style={styles.shopInfoTitle}>{data.name}</Text>
+                        <Text style={styles.shopInfoSubTitle}>{data.phone}</Text>
                         <Text style={styles.shopInfoSubTitle}>₹ {data.price}</Text>
-                        <Text style={styles.shopInfoSubTitle}>{data.date}</Text>
                     </View>
                 </View>
                 <Text style={styles.servicesHead}>Services:</Text>
