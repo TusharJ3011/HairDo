@@ -10,11 +10,11 @@ export const AboutScreen = ({navigation}) => {
         <View style={styles.container}>
             <ScrollView>
                 <Pressable style={[styles.appContainer, styles.boxShadow]}>
-                    <Image source={require("../../assets/images/account/userglobal.png")} style={styles.appImage}/>
+                    <Image source={require("../../assets/images/auth/logo.png")} style={styles.appImage}/>
                     <View style={styles.appInfoContainer}>
                         <Text style={styles.appInfoTitle}>HairDo</Text>
                         <Text style={styles.appInfoSubTitle}>0.0.1 v1</Text>
-                        <Text style={styles.appInfoSubTitle}>11th November 2022</Text>
+                        <Text style={styles.appInfoSubTitle}>23rd November 2022</Text>
                         <Text style={styles.appInfoSubTitle}>GNU General Public Use License v3</Text>
                     </View>
                 </Pressable>
@@ -25,7 +25,7 @@ export const AboutScreen = ({navigation}) => {
                         navigation.navigate("Coming Soon")
                     }}
                     >
-                        <Image source={require("../../assets/images/account/userglobal.png")} style={styles.multiButtonImage}/>
+                        <Image source={require("../../assets/images/icons/terms.png")} style={styles.multiButtonImage}/>
                         <Text style={styles.multiButtonTitle}>Terms and</Text>
                         <Text style={styles.multiButtonTitle}>Conditions</Text>
                     </Pressable>
@@ -35,13 +35,17 @@ export const AboutScreen = ({navigation}) => {
                         navigation.navigate("Coming Soon")
                     }}
                     >
-                        <Image source={require("../../assets/images/account/userglobal.png")} style={styles.multiButtonImage}/>
+                        <Image source={require("../../assets/images/icons/privacy.png")} style={styles.multiButtonImage}/>
                         <Text style={styles.multiButtonTitle}>Privacy</Text>
                         <Text style={styles.multiButtonTitle}>Policy</Text>
                     </Pressable>
 
-                    <Pressable style={[styles.multiButtonContainer, styles.boxShadow]}>
-                        <Image source={require("../../assets/images/account/userglobal.png")} style={styles.multiButtonImage}/>
+                    <Pressable style={[styles.multiButtonContainer, styles.boxShadow]}
+                    onPress={()=>{
+                        navigation.navigate('Developers');
+                    }}
+                    >
+                        <Image source={require("../../assets/images/icons/developers.png")} style={styles.multiButtonImage}/>
                         <Text style={styles.multiButtonTitle}>Developers</Text>
                     </Pressable>
                 </View>
@@ -52,16 +56,20 @@ export const AboutScreen = ({navigation}) => {
                 }}
                 >
                     <View style={styles.otherButtonSubContainer}>
-                        <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
+                        <Image source={require("../../assets/images/icons/feedback.png")} style={styles.otherButtonImage}/>
                         <Text style={styles.otherButtonTitle}>Send Feedback</Text>
                     </View>
                     <Image source={require("../../assets/images/icons/rightarrow.png")} style={styles.otherButtonImage2}/>
                 </Pressable>
 
-                <Pressable style={[styles.otherButtonContainer, styles.boxShadow]}>
+                <Pressable style={[styles.otherButtonContainer, styles.boxShadow]}
+                onPress={()=>{
+                    navigation.navigate('OpenSource')
+                }}
+                >
                     <View style={styles.otherButtonSubContainer}>
-                        <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
-                        <Text style={styles.otherButtonTitle}>Open Source Services</Text>
+                        <Image source={require("../../assets/images/icons/openlib.png")} style={styles.otherButtonImage}/>
+                        <Text style={styles.otherButtonTitle}>Open Source Libraries</Text>
                     </View>
                     <Image source={require("../../assets/images/icons/rightarrow.png")} style={styles.otherButtonImage2}/>
                 </Pressable>
@@ -72,7 +80,7 @@ export const AboutScreen = ({navigation}) => {
                 }}
                 >
                     <View style={styles.otherButtonSubContainer}>
-                        <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
+                        <Image source={require("../../assets/images/icons/license.png")} style={styles.otherButtonImage}/>
                         <Text style={styles.otherButtonTitle}>Licenses and Registrations</Text>
                     </View>
                     <Image source={require("../../assets/images/icons/rightarrow.png")} style={styles.otherButtonImage2}/>
@@ -106,13 +114,12 @@ const styles = StyleSheet.create({
     },
 
     appImage:{
-        width: 70,
+        width: 90,
         height: 70,
         resizeMode: 'stretch',
         overflow:'hidden',
         margin: 0,
         padding: 0,
-        borderRadius: 70,
     },
 
     appInfoContainer:{
@@ -155,13 +162,12 @@ const styles = StyleSheet.create({
     },
 
     multiButtonImage:{
-        width: 70,
-        height: 70,
+        width: 50,
+        height: 50,
         resizeMode: 'stretch',
         overflow:'hidden',
         margin: 0,
         padding: 0,
-        borderRadius: 70,
     },
 
     multiButtonTitle:{
@@ -190,13 +196,12 @@ const styles = StyleSheet.create({
     },
 
     otherButtonImage:{
-        width: 70,
-        height: 70,
+        width: 50,
+        height: 50,
         resizeMode: 'stretch',
         overflow:'hidden',
         margin: 0,
         padding: 0,
-        borderRadius: 70,
     },
 
     otherButtonImage2:{

@@ -9,7 +9,7 @@ import {signOut } from '../../components/FirebaseAuth';
 
 export const AccountScreen = ({navigation}) => {
     const globalContext = useContext(GlobalContext);
-    let user = '20ucs211';
+    let user = globalContext.userid;
     let temp = {_data:{name: '',
                 email:"",
                 phone:''}};
@@ -48,7 +48,13 @@ export const AccountScreen = ({navigation}) => {
 
                 <View style={styles.multiButtonBox}>
                     <Pressable style={[styles.multiButtonContainer, styles.boxShadow]}
-                    onPress={()=>{navigation.navigate("Bookings")}}
+                    onPress={()=>{
+                        if (userData._data.bookings.length !== 0){
+                            navigation.navigate("Bookings")
+                        }else{
+                            navigation.navigate("No Screen", {text:'appointment', head:'Bookings'})
+                        }
+                    }}
                     >
                         <Image source={require("../../assets/images/icons/bookings.png")} style={styles.multiButtonImage}/>
                         <Text style={styles.multiButtonTitle}>Bookings</Text>
@@ -88,7 +94,7 @@ export const AccountScreen = ({navigation}) => {
                     if (userData._data.shopid !== ""){
                         navigation.navigate("Schedule", {shop:userData._data.shopid})
                     }else{
-                        navigation.navigate("No Shop")
+                        navigation.navigate("No Screen", {text:'shops', head:'Schedule'})
                     }
                 }}
                 >

@@ -60,7 +60,7 @@ export const LoginScreen = ({navigation}) => {
         }}
       >
         <Image source={Google} style={styles.google} />
-        <Text style={styles.btnText}>SignUp/ Login</Text>
+        <Text style={styles.btnText}>Login With Google</Text>
       </TouchableOpacity>
     </View>
   )
@@ -74,12 +74,12 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   logo: {
-    width: '50%',
-    height: '12%'
+    width: '70%',
+    height: '15%'
   },
   title: {
     fontSize: 36,
-    fontWeight: '500',
+    fontWeight: '900',
     color: 'black'
   },
   google: {
@@ -87,17 +87,21 @@ const styles = StyleSheet.create({
     height: 30
   },
   signBtn: {
+    marginTop: 30,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    width: 170,
+    width: '70%',
     backgroundColor: '#225599',
     borderRadius: 10,
     paddingHorizontal: 6,
     paddingVertical: 6
   },
+
   btnText: {
     color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: '500',
   }
 })

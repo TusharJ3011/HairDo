@@ -78,6 +78,8 @@ const styles = StyleSheet.create({
         height: 300,
         alignItems: 'center',
         justifyContent: 'center',
+        borderBottomWidth: 1,
+        borderColor:'#1798C7',
     },
 
     cardSakshaat:{

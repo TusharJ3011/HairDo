@@ -17,11 +17,13 @@ import { SignUpScreen } from '../screens/LoginScreen/SignUpScreen';
 import { EditProfileScreen } from '../screens/AccountScreen/EditProfileScreen';
 import { ScheduleScreen } from '../screens/AccountScreen/ScheduleScreen';
 import { ComingSoonScreen } from '../screens/GlobalScreen/ComingSoonScreen';
-import { NoShopScreen } from '../screens/AccountScreen/NoShopScreen';
+import { NoScreen } from '../screens/GlobalScreen/NoScreen';
 import { ShopScreen } from '../screens/HomeScreen/ShopScreen';
 import { BookingDetailsScreen } from '../screens/AccountScreen/BookingDetailsScreen';
 import { ScheduleDetailsScreen } from '../screens/AccountScreen/ScheduleDetailsScreen';
 import Header from './Header';
+import { OpenSourceLibrariesScreen } from '../screens/AccountScreen/OpenSourceLibrariesScreen';
+import { DevelopersScreen } from '../screens/AccountScreen/DevelopersScreen';
 // import {BookingDetailsScreen} from '../screens/AcountScreen.BookingDetailsScreen'
 
 export const MainContainer = () => {
@@ -63,8 +65,12 @@ export const MainContainer = () => {
             <MainStack.Screen name="Offers" component={OfferScreen} />
             <MainStack.Screen name="Avail Offer" component={AvailOfferScreen} />
             <MainStack.Screen name="Coming Soon" component={ComingSoonScreen} />
-            <MainStack.Screen name="No Shop" component={NoShopScreen} options={{
+            <MainStack.Screen name="Developers" component={DevelopersScreen} />
+            <MainStack.Screen name="No Screen" component={NoScreen} options={{
                 headerTitle:'Schedule',
+            }} />
+            <MainStack.Screen name="OpenSource" component={OpenSourceLibrariesScreen}  options={{
+                headerTitle:'Open Source Libraries',
             }} />
 
         </MainStack.Navigator>

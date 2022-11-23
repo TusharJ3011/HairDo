@@ -3,55 +3,27 @@ import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView, Platf
 import { useContext, useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
-import { GlobalContext } from '../../components/Context';
 
 
-export const BookingScreen = ({navigation}) => {
-    const globalContext = useContext(GlobalContext);
-    let user = globalContext.userid;
-    const [data, setData] = useState([]);
-    const getData = async() => {
-        let user_data = await firestore().collection('users').doc(user).get();
-        // console.log(user_data);
-        if (user_data._exists){
-            setData(user_data._data.bookings)
-        }
-    }
-
-    useEffect(()=>{
-        getData();
-    }, [])
-
-
-    let booking_data = []
-    data.map((item)=>{
-        var itemTemp = item;
-        var bookDate = new Date(item.date.seconds*1000);
-        console.log(bookDate);
-        var bookDateStr = bookDate.getDate() + "-" + bookDate.getMonth() + "-" + bookDate.getFullYear() + " at " + bookDate.getHours() + ":" + bookDate.getMinutes();
-        // console.log(bookDateStr);
-        itemTemp.date = bookDateStr;
-        booking_data.push(itemTemp)
+export const OpenSourceLibrariesScreen = ({navigation}) => {
+    const depends = require("../../package.json").dependencies;
+    let data = [];
+    Object.entries(depends).map(([k, v]) => {
+        data.push({ title: k, ver: v });
     });
-    // console.log(booking_data);
 
     return (
         <View style={styles.container}>
             <ScrollView>
-                {booking_data.map((item)=>{
-                return(<Pressable style={[styles.otherButtonContainer, styles.boxShadow]} key={item.shopname+item.shopid}
-                onPress={()=>{
-                    navigation.navigate("Booking Details", {shopname:item.shopname, date:item.date, price:item.price, services:item.services})
-                }}
-                >
+                {data.map((item, index)=>{
+                return(<Pressable style={[styles.otherButtonContainer, styles.boxShadow]} key={index}>
                     <View style={styles.otherButtonSubContainer}>
-                        <Image source={require("../../assets/images/icons/booking_item.png")} style={styles.otherButtonImage}/>
+                        <Image source={require("../../assets/images/icons/openlib_item.png")} style={styles.otherButtonImage}/>
                         <View>
-                            <Text style={styles.otherButtonTitle}>{item.shopname}</Text>
-                            <Text style={styles.otherButtonSubTitle}>{item.date}</Text>
+                            <Text style={styles.openTitle}>{item.title}</Text>
+                            <Text style={styles.openSubTitle}>{item.ver}</Text>
                         </View>
                     </View>
-                    <Image source={require("../../assets/images/icons/rightarrow.png")} style={styles.otherButtonImage2}/>
                 </Pressable>)   
                 })}         
             </ScrollView>
@@ -89,13 +61,12 @@ const styles = StyleSheet.create({
     },
 
     otherButtonImage:{
-        width: 70,
-        height: 70,
+        width: 50,
+        height: 50,
         resizeMode: 'stretch',
         overflow:'hidden',
         margin: 0,
         padding: 0,
-        borderRadius: 70,
     },
 
     otherButtonImage2:{
@@ -107,17 +78,18 @@ const styles = StyleSheet.create({
         padding: 0,
     },
 
-    otherButtonTitle:{
-        fontSize: 25,
+    openTitle:{
+        fontSize: 15,
         fontWeight: '700',
         margin: 0,
         marginLeft: 10,
         color: 'black',
     },
 
-    otherButtonSubTitle:{
+    openSubTitle:{
         fontSize: 15,
         margin: 0,
+        marginTop: 5,
         marginLeft: 10,
         color: '#999999',
     },

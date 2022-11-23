@@ -3,14 +3,17 @@ import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView, Platf
 import { useContext, useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
-import { _signIn } from '../../components/FirebaseAuth';
+// import { _signIn } from '../../components/FirebaseAuth';
+import { GlobalContext } from '../../components/Context';
 
 export const HomeScreen = ({navigation}) => {
-    // let user = '20ucs211';
-    // let temp = {_data:{name: '',
-    //             email:"",
-    //             phone:''}};
-    // const [userData, setUserData] = useState(temp);
+    const globalContext = useContext(GlobalContext);
+    let user = globalContext.userid;
+    let temp = {_data:{name: '',
+                email:"",
+                phone:'',
+                offers:[]}};
+    const [userData, setUserData] = useState(temp);
     const [shopList, setShopList] = useState([]);
 
     const getShopData = async() => {
@@ -23,9 +26,10 @@ export const HomeScreen = ({navigation}) => {
         console.log(shop_list);
         setShopList(shop_list)
 
-        // if (user_data._exists){
-        //     setUserData(user_data)
-        // }
+        let user_data = await firestore().collection('users').doc(user).get();
+        if (user_data._exists){
+            setUserData(user_data)
+        }
     }
 
     useEffect(()=>{
@@ -69,8 +73,13 @@ export const HomeScreen = ({navigation}) => {
         <View style={styles.container}>
             <ScrollView>
                 <Pressable style={styles.pressButton} 
-                onPress={()=>(navigation.navigate('Offers'))}
-                // onPress={()=>(_signIn().then(() => console.log('Signed in with Google!')))}
+                onPress={()=>{
+                    if (userData._data.offers.length !== 0){
+                        navigation.navigate("Offers")
+                    }else{
+                        navigation.navigate("No Screen", {text:'offer', head:'Offers'})
+                    }
+                }}
                 >
                     <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['rgba(23, 152, 199, 1)', 'rgba(26, 245, 232, 0.31)']} style={styles.linearGradient}>
                         <Text style={styles.pressText}>Offers</Text>

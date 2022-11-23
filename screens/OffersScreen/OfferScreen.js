@@ -3,10 +3,12 @@ import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView, Platf
 import { useContext, useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
+import { GlobalContext } from '../../components/Context';
 
 
 export const OfferScreen = ({navigation}) => {
-    let user = '20ucs211';
+    const globalContext = useContext(GlobalContext);
+    let user = globalContext.userid;
     const [offerList, setOfferList] = useState([]);
     // const [shopList, setShopList] = useState([]);
 
@@ -34,7 +36,7 @@ export const OfferScreen = ({navigation}) => {
                         onPress={()=>{navigation.navigate("Avail Offer", {data:item})}}
                         >
                             <View style={styles.otherButtonSubContainer}>
-                                <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
+                                <Image source={require("../../assets/images/icons/offer.png")} style={styles.otherButtonImage}/>
                                 <View>
                                     <Text style={styles.otherButtonTitle}>{item.title.slice(0, 30)}{item.title.length > 30 ? "..." : ""}</Text>
                                 </View>
@@ -78,13 +80,12 @@ const styles = StyleSheet.create({
     },
 
     otherButtonImage:{
-        width: 70,
-        height: 70,
+        width: 50,
+        height: 50,
         resizeMode: 'stretch',
         overflow:'hidden',
         margin: 0,
         padding: 0,
-        borderRadius: 70,
     },
 
     otherButtonImage2:{

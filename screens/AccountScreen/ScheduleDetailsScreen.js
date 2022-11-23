@@ -36,7 +36,7 @@ export const ScheduleDetailsScreen = ({route, navigation}) => {
                 <View style={[styles.shopContainer]}>
                     <View style={styles.shopInfoContainer}>
                         <Text style={styles.shopInfoTitle}>{data.name}</Text>
-                        <Text style={styles.shopInfoSubTitle}>{data.phone}</Text>
+                        <Text style={styles.shopInfoSubTitle}>+91-{data.phone}</Text>
                         <Text style={styles.shopInfoSubTitle}>₹ {data.price}</Text>
                     </View>
                 </View>

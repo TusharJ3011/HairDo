@@ -11,7 +11,7 @@ export const SignUpScreen = ({route, navigation}) => {
   const [email, setEmail] = useState('')
   const [phno, setPhno] = useState('')
   const [gender, setGender] = useState('')
-  const [accType, setAccType] = useState('')
+  // const [accType, setAccType] = useState('')
   const [address, setAddress] = useState('')
 
   const data = route.params;
@@ -20,20 +20,20 @@ export const SignUpScreen = ({route, navigation}) => {
   // setEmail(data.info.user.email);
 
   const signUpUser = () => {
-    if (name !== '' && address !== '' && accType !== '' && gender !== '' && phno !== '' && email !== ''){
+    if (name !== '' && address !== '' && gender !== '' && phno !== '' && email !== ''){
       firestore()
         .collection('users')
         .doc(data.roll)
         .set({
-          booking:[],
+          bookings:[],
           offers:[],
           email:email,
           gender:gender,
           name: name,
           phone: phno,
-          roll: roll,
+          roll: data.roll,
           address: address,
-          accType: accType,
+          shopid: '',
         })
         .then(() => {
           ToastAndroid.show("User successfully Signed Up", ToastAndroid.SHORT);
@@ -81,13 +81,13 @@ export const SignUpScreen = ({route, navigation}) => {
           style={styles.inpBox}
           keyboardType="default"
         />
-        <TextInput
+        {/* <TextInput
           autoFocus
           onChangeText={(e) => setAccType(e)}
           placeholder='Account Type'
           style={styles.inpBox}
           keyboardType="default"
-        />
+        /> */}
         <TextInput
           autoFocus
           onChangeText={(e) => setAddress(e)}

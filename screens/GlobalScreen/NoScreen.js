@@ -1,10 +1,15 @@
 import * as React from 'react';
 import { View, Text, StyleSheet} from 'react-native';
 
-export const NoShopScreen = ({ navigation }) => {
+export const NoScreen = ({ route, navigation }) => {
+    React.useEffect(()=>{
+        navigation.setOptions({
+            headerTitle: route.params?.head,
+        });
+    }, [])
     return (
         <View style={styles.container}>
-            <Text style={styles.onlyText}>You own 0 shops</Text>
+            <Text style={styles.onlyText}>Looks like you have no {route.params?.text}</Text>
         </View>
     );
 }
@@ -22,5 +27,6 @@ const styles = StyleSheet.create({
         color: "#000000",
         fontSize: 30,
         fontWeight: 'bold',
+        textAlign: 'center',
     },
 })
