@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform, ToastAndroid } from 'react-native'
 import User from '../../assets/images/account/userglobal.png';
+import firestore from '@react-native-firebase/firestore';
 
-export const SignUpScreen = () => {
+export const SignUpScreen = ({route, navigation}) => {
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -10,6 +11,37 @@ export const SignUpScreen = () => {
   const [gender, setGender] = useState('')
   const [accType, setAccType] = useState('')
   const [address, setAddress] = useState('')
+  const [photo, setPhoto] = useState('')
+
+  const data = route.params;
+  setName(data.info.user.name);
+  setPhoto(data.info.user.photo);
+  setEmail(data.info.user.email);
+
+  const signUpUser = () => {
+    if (name !== '' && address !== '' && accType !== '' && gender !== '' && phno !== '' && email !== ''){
+      firestore()
+        .collection('users')
+        .doc(data.roll)
+        .set({
+          booking:[],
+          offers:[],
+          email:email,
+          gender:gender,
+          name: name,
+          phone: phno,
+          roll: roll,
+          address: address,
+          accType: accType,
+        })
+        .then(() => {
+          ToastAndroid.show("User successfully Signed Up", ToastAndroid.SHORT);
+        });
+    }else{
+      ToastAndroid.show("Please fill the form!", ToastAndroid.SHORT);
+    }
+  }
+
 
   return (
     <View style={styles.container}>

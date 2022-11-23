@@ -2,6 +2,8 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Appearance } from 'react-native';
+import { useContext } from 'react';
+import { GlobalContext } from './Context';
 
 // Screens
 import { HomeScreen } from '../screens/HomeScreen/HomeScreen';
@@ -16,10 +18,15 @@ import { EditProfileScreen } from '../screens/AccountScreen/EditProfileScreen';
 // import {BookingDetailsScreen} from '../screens/AcountScreen.BookingDetailsScreen'
 
 export const MainContainer = () => {
+    const globalContext = useContext(GlobalContext);
+    let initialR = '';
+    // console.log(globalContext.isLogged);
+    globalContext.isLogged ? initialR='Home' : initialR='Login';
+    // initialR = 'Home';
     const MainStack = createStackNavigator();
     return (
         // <NavigationContainer>
-        <MainStack.Navigator initialRouteName='Edit Profile'
+        <MainStack.Navigator initialRouteName={initialR}
         screenOptions={{
         presentation:'modal',
         // gestureEnabled:true,
@@ -30,7 +37,9 @@ export const MainContainer = () => {
         },
         }}
         >
-            <MainStack.Screen name="Login" component={LoginScreen} />
+            <MainStack.Screen name="Login" component={LoginScreen} options={{
+                headerShown:false,
+            }}/>
             <MainStack.Screen name="Sign Up" component={SignUpScreen} />
             <MainStack.Screen name="Edit Profile" component={EditProfileScreen} />
             <MainStack.Screen name="Home" component={HomeScreen} />

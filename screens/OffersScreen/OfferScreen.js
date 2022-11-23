@@ -17,7 +17,7 @@ export const OfferScreen = ({navigation}) => {
         if (user_data._exists){
             offer_list = user_data._data.offers;
         }
-        console.log(offer_list);
+        // console.log(offer_list);
         setOfferList(offer_list)
     }
 

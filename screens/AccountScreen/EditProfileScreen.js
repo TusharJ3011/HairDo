@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useContext } from 'react';
+import { GlobalContext } from '../../components/Context';
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import User from '../../assets/images/account/userglobal.png';
 

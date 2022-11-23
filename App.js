@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -24,6 +24,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import { GlobalContext, GlobalState } from './components/Context';
 
 import { MainContainer } from './components/MainComponent';
 import { HomeScreen } from './screens/HomeScreen/HomeScreen';
@@ -67,9 +69,11 @@ const App = () => {
   };
 
   return (
-    <NavigationContainer style={backgroundStyle}>
-      <MainContainer />
-    </NavigationContainer>
+    <GlobalState>
+      <NavigationContainer style={backgroundStyle}>
+        <MainContainer />
+      </NavigationContainer>
+    </GlobalState>
   );
 };
 

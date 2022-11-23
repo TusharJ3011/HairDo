@@ -1,12 +1,42 @@
-import React from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React from 'react';
+import { useContext } from 'react';
+import { GlobalContext } from '../../components/Context';
+import { Image, StyleSheet, Text, TouchableOpacity, View, Platform, ToastAndroid } from 'react-native'
 import Logo from '../../assets/images/auth/logo.png';
 import Google from '../../assets/images/auth/google.png';
+import { _signIn, signOut } from '../../components/FirebaseAuth';
+import firestore from '@react-native-firebase/firestore';
 
-export const LoginScreen = () => {
+export const LoginScreen = ({navigation}) => {
+  const globalContext = useContext(GlobalContext);
 
-  const signInFn = () => {
-
+  const signInFn = async () => {
+    await signOut();
+    const result = await _signIn();
+    // console.log(result);
+    if (result.success){
+      if (Platform.OS === 'android'){
+        ToastAndroid.show("Login Successful", ToastAndroid.SHORT);
+      }
+      globalContext.setIsLogged(true);
+      globalContext.setUsername(result.info.user.name);
+      globalContext.setUserid(result.roll);
+      let user_data = await firestore().collection('users').doc(result.roll).get();
+      // if (user_data._exists){
+      //   navigation.reset({
+      //     index: 0,
+      //     routes: [{name: 'Home'}],
+      //   });
+      // }else{
+      //   navigation.navigate('Sign Up', {info:result.info, roll:result.roll})
+      // }
+      navigation.navigate('Home');
+    }else{
+      if (Platform.OS === 'android'){
+        ToastAndroid.show(result.reason, ToastAndroid.SHORT);
+      }
+      globalContext.setIsLogged(false);
+    }
   }
 
   return (
