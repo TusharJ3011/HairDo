@@ -1,28 +1,36 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView, Platform, ImageBackground} from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView, Platform, ImageBackground, ToastAndroid} from 'react-native';
 import { useContext, useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
-import Clipboard from '@react-native-community/clipboard'
+import Clipboard from '@react-native-community/clipboard';
+import Images from '../../components/Images';
 
 const image = require('../../assets/images/offers/img1.jpg')
 
-export const AvailOfferScreen = () => {
-    var data = '9561123456485473';
+export const AvailOfferScreen = ({route, navigation}) => {
+    var data = route.params?.data;
+    var offercode = data.code1 + "" + data.code2 + "" +  data.code3 + "" +  data.code4
+    console.log(offercode);
     const copyToClipboard = () => {
-        Clipboard.setString(data);
+        Clipboard.setString(offercode);
+        if (Platform.OS === 'android'){
+            ToastAndroid.show("Offer Code copied", ToastAndroid.SHORT);
+        }
     }
+    var expiryDate = new Date(data.expiry.seconds*1000);
+    var expiryDateStr = expiryDate.getDate() + "/" + expiryDate.getMonth() + "/" + expiryDate.getFullYear();
 
     return (
         <View style={styles.container}>
             <View style={styles.cardContainer}>
-                <ImageBackground source={image} resizeMode="stretch" overflow='hidden'  style={styles.cardSakshaat} imageStyle={{ borderRadius: 10}}>
+                <ImageBackground source={Images[data.img]} resizeMode="stretch" overflow='hidden'  style={styles.cardSakshaat} imageStyle={{ borderRadius: 10}}>
                     <View style={styles.cardLogo}></View>
                     <View style={styles.cardCode}>
-                        <Text style={styles.offerSubCodeText}>9561</Text>
-                        <Text style={styles.offerSubCodeText}>1234</Text>
-                        <Text style={styles.offerSubCodeText}>5648</Text>
-                        <Text style={styles.offerSubCodeText}>5473</Text>
+                        <Text style={styles.offerSubCodeText}>{data.code1}</Text>
+                        <Text style={styles.offerSubCodeText}>{data.code2}</Text>
+                        <Text style={styles.offerSubCodeText}>{data.code3}</Text>
+                        <Text style={styles.offerSubCodeText}>{data.code4}</Text>
                     </View>
                     <View style={styles.cardDetails}>
                         <View style={styles.cardSubDetails}>
@@ -31,7 +39,7 @@ export const AvailOfferScreen = () => {
                         </View>
                         <View style={styles.cardSubDetails}>
                             <Text style={styles.cardDetailsHead}>Expires</Text>
-                            <Text style={styles.cardDetailsText}>01/23</Text>
+                            <Text style={styles.cardDetailsText}>{expiryDateStr}</Text>
                         </View>
                     </View>
                 </ImageBackground>
@@ -39,9 +47,10 @@ export const AvailOfferScreen = () => {
 
             <ScrollView>
                 <View style={styles.otherContainer}>
-                    <Text style={styles.offerTitle}>Rs. 100/- off on first booking</Text> 
+                    <Text style={styles.offerTitle}>{data.title}</Text> 
                     <View>
                         <Text style={styles.tcHead}>Terms and Conditions:</Text>
+                        <Text>{data.tandc}</Text>
                     </View>
                 </View>                           
             </ScrollView>

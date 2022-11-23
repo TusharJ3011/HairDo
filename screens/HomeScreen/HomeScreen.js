@@ -49,7 +49,7 @@ export const HomeScreen = ({navigation}) => {
         console.log(data.type);
         return (
             <Pressable style={[styles.shopContainer, styles.boxShadow]}
-                onPress={()=>(navigation.navigate('Offers'))}
+                // onPress={()=>(navigation.navigate('Offers'))}
             >
                 <Image source={require("../../assets/images/home/shopglobal.png")} style={styles.shopImage}/>
                 <View style={styles.shopInfoContainer}>

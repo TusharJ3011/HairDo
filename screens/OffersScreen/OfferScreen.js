@@ -5,20 +5,43 @@ import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 
 
-export const OfferScreen = () => {
+export const OfferScreen = ({navigation}) => {
+    let user = '20ucs211';
+    const [offerList, setOfferList] = useState([]);
+    // const [shopList, setShopList] = useState([]);
+
+    const getOfferData = async() => {
+        var offer_list = []
+        let user_data = await firestore().collection('users').doc(user).get();
+        console.log(user_data);
+        if (user_data._exists){
+            offer_list = user_data._data.offers;
+        }
+        console.log(offer_list);
+        setOfferList(offer_list)
+    }
+
+    useEffect(()=>{
+        getOfferData();
+    }, [])
+
     return (
         <View style={styles.container}>
             <ScrollView>
-                <Pressable style={[styles.otherButtonContainer, styles.boxShadow]}>
-                    <View style={styles.otherButtonSubContainer}>
-                        <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
-                        <View>
-                            <Text style={styles.otherButtonTitle}>{'Rs. 100/- off on first booking'.slice(0, 30) + '...'}</Text>
-                        </View>
-                    </View>
-                    <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
-                </Pressable>
-
+                {offerList.map((item, index)=>{
+                    return(
+                        <Pressable style={[styles.otherButtonContainer, styles.boxShadow]} key={index}
+                        onPress={()=>{navigation.navigate("Avail Offer", {data:item})}}
+                        >
+                            <View style={styles.otherButtonSubContainer}>
+                                <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
+                                <View>
+                                    <Text style={styles.otherButtonTitle}>{item.title.slice(0, 30)}{item.title.length > 30 ? "..." : ""}</Text>
+                                </View>
+                            </View>
+                            <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
+                        </Pressable>
+                );})}
                             
             </ScrollView>
         </View>
