@@ -13,7 +13,7 @@ export const OfferScreen = ({navigation}) => {
     const getOfferData = async() => {
         var offer_list = []
         let user_data = await firestore().collection('users').doc(user).get();
-        console.log(user_data);
+        // console.log(user_data);
         if (user_data._exists){
             offer_list = user_data._data.offers;
         }
@@ -39,7 +39,7 @@ export const OfferScreen = ({navigation}) => {
                                     <Text style={styles.otherButtonTitle}>{item.title.slice(0, 30)}{item.title.length > 30 ? "..." : ""}</Text>
                                 </View>
                             </View>
-                            <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
+                            <Image source={require("../../assets/images/icons/rightarrow.png")} style={styles.otherButtonImage2}/>
                         </Pressable>
                 );})}
                             
@@ -85,6 +85,15 @@ const styles = StyleSheet.create({
         margin: 0,
         padding: 0,
         borderRadius: 70,
+    },
+
+    otherButtonImage2:{
+        width: 15,
+        height: 15,
+        resizeMode: 'stretch',
+        overflow:'hidden',
+        margin: 0,
+        padding: 0,
     },
 
     otherButtonTitle:{

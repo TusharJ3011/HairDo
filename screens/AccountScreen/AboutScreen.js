@@ -20,13 +20,21 @@ export const AboutScreen = ({navigation}) => {
                 </Pressable>
 
                 <View style={styles.multiButtonBox}>
-                    <Pressable style={[styles.multiButtonContainer, styles.boxShadow]}>
+                    <Pressable style={[styles.multiButtonContainer, styles.boxShadow]}
+                    onPress={()=>{
+                        navigation.navigate("Coming Soon")
+                    }}
+                    >
                         <Image source={require("../../assets/images/account/userglobal.png")} style={styles.multiButtonImage}/>
                         <Text style={styles.multiButtonTitle}>Terms and</Text>
                         <Text style={styles.multiButtonTitle}>Conditions</Text>
                     </Pressable>
 
-                    <Pressable style={[styles.multiButtonContainer, styles.boxShadow]}>
+                    <Pressable style={[styles.multiButtonContainer, styles.boxShadow]}
+                    onPress={()=>{
+                        navigation.navigate("Coming Soon")
+                    }}
+                    >
                         <Image source={require("../../assets/images/account/userglobal.png")} style={styles.multiButtonImage}/>
                         <Text style={styles.multiButtonTitle}>Privacy</Text>
                         <Text style={styles.multiButtonTitle}>Policy</Text>
@@ -38,12 +46,16 @@ export const AboutScreen = ({navigation}) => {
                     </Pressable>
                 </View>
 
-                <Pressable style={[styles.otherButtonContainer, styles.boxShadow]}>
+                <Pressable style={[styles.otherButtonContainer, styles.boxShadow]}
+                onPress={()=>{
+                    navigation.navigate("Coming Soon")
+                }}
+                >
                     <View style={styles.otherButtonSubContainer}>
                         <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
                         <Text style={styles.otherButtonTitle}>Send Feedback</Text>
                     </View>
-                    <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
+                    <Image source={require("../../assets/images/icons/rightarrow.png")} style={styles.otherButtonImage2}/>
                 </Pressable>
 
                 <Pressable style={[styles.otherButtonContainer, styles.boxShadow]}>
@@ -51,15 +63,19 @@ export const AboutScreen = ({navigation}) => {
                         <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
                         <Text style={styles.otherButtonTitle}>Open Source Services</Text>
                     </View>
-                    <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
+                    <Image source={require("../../assets/images/icons/rightarrow.png")} style={styles.otherButtonImage2}/>
                 </Pressable>
 
-                <Pressable style={[styles.otherButtonContainer, styles.boxShadow]}>
+                <Pressable style={[styles.otherButtonContainer, styles.boxShadow]}
+                onPress={()=>{
+                    navigation.navigate("Coming Soon")
+                }}
+                >
                     <View style={styles.otherButtonSubContainer}>
                         <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
                         <Text style={styles.otherButtonTitle}>Licenses and Registrations</Text>
                     </View>
-                    <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
+                    <Image source={require("../../assets/images/icons/rightarrow.png")} style={styles.otherButtonImage2}/>
                 </Pressable>
             </ScrollView>
         </View>
@@ -176,6 +192,16 @@ const styles = StyleSheet.create({
     otherButtonImage:{
         width: 70,
         height: 70,
+        resizeMode: 'stretch',
+        overflow:'hidden',
+        margin: 0,
+        padding: 0,
+        borderRadius: 70,
+    },
+
+    otherButtonImage2:{
+        width: 15,
+        height: 15,
         resizeMode: 'stretch',
         overflow:'hidden',
         margin: 0,

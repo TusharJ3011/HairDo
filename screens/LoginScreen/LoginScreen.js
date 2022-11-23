@@ -12,6 +12,10 @@ export const LoginScreen = ({navigation}) => {
 
   const signInFn = async () => {
     await signOut();
+    globalContext.setIsLogged(false);
+    globalContext.setUsername("");
+    globalContext.setUserid("");
+    globalContext.setUserPic("");
     const result = await _signIn();
     // console.log(result);
     if (result.success){
@@ -21,16 +25,22 @@ export const LoginScreen = ({navigation}) => {
       globalContext.setIsLogged(true);
       globalContext.setUsername(result.info.user.name);
       globalContext.setUserid(result.roll);
+      globalContext.setUserPic(result.info.user.photo);
       let user_data = await firestore().collection('users').doc(result.roll).get();
-      // if (user_data._exists){
-      //   navigation.reset({
-      //     index: 0,
-      //     routes: [{name: 'Home'}],
-      //   });
-      // }else{
-      //   navigation.navigate('Sign Up', {info:result.info, roll:result.roll})
-      // }
-      navigation.navigate('Home');
+      if (user_data._exists){
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Home'}],
+        });
+      }else{
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Sign Up', params:{info:result.info, roll:result.roll}}],
+        });
+        // navigation.navigate('Sign Up', {info:result.info, roll:result.roll});
+        // return;
+      }
+      // navigation.navigate('Home');
     }else{
       if (Platform.OS === 'android'){
         ToastAndroid.show(result.reason, ToastAndroid.SHORT);

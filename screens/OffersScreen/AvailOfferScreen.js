@@ -11,7 +11,7 @@ const image = require('../../assets/images/offers/img1.jpg')
 export const AvailOfferScreen = ({route, navigation}) => {
     var data = route.params?.data;
     var offercode = data.code1 + "" + data.code2 + "" +  data.code3 + "" +  data.code4
-    console.log(offercode);
+    // console.log(offercode);
     const copyToClipboard = () => {
         Clipboard.setString(offercode);
         if (Platform.OS === 'android'){
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     },
 
     cardContainer:{
-        backgroundColor: '#bbbbbb',
+        backgroundColor: '#dddddd',
         width: '100%',
         height: 300,
         alignItems: 'center',

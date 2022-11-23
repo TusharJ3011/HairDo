@@ -5,6 +5,7 @@ import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'reac
 import User from '../../assets/images/account/userglobal.png';
 
 export const EditProfileScreen = () => {
+  const globalContext = useContext(GlobalContext);
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -14,7 +15,7 @@ export const EditProfileScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={User} style={styles.userPic} />
+      <Image source={{uri:globalContext.userPic}} style={styles.userPic} />
       <View style={styles.subContainer}>
         <TextInput
           autoCapitalize='true'
@@ -74,6 +75,7 @@ const styles = StyleSheet.create({
   userPic: {
     width: 80,
     height: 80,
+    borderRadius: 40,
   },
   subContainer: {
     width: '100%',

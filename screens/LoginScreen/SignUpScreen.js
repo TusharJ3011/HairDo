@@ -1,22 +1,23 @@
 import React, { useState } from 'react'
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform, ToastAndroid } from 'react-native'
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform, ToastAndroid } from 'react-native';
+import { useContext } from 'react';
+import { GlobalContext } from '../../components/Context';
 import User from '../../assets/images/account/userglobal.png';
 import firestore from '@react-native-firebase/firestore';
 
 export const SignUpScreen = ({route, navigation}) => {
-
+  const globalContext = useContext(GlobalContext);
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phno, setPhno] = useState('')
   const [gender, setGender] = useState('')
   const [accType, setAccType] = useState('')
   const [address, setAddress] = useState('')
-  const [photo, setPhoto] = useState('')
 
   const data = route.params;
-  setName(data.info.user.name);
-  setPhoto(data.info.user.photo);
-  setEmail(data.info.user.email);
+  // setName(data.info.user.name);
+  // setPhoto(data.info.user.photo);
+  // setEmail(data.info.user.email);
 
   const signUpUser = () => {
     if (name !== '' && address !== '' && accType !== '' && gender !== '' && phno !== '' && email !== ''){
@@ -45,7 +46,7 @@ export const SignUpScreen = ({route, navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Image source={User} style={styles.userPic} />
+      <Image source={{uri:globalContext.userPic}} style={styles.userPic} />
       <View style={styles.subContainer}>
         <TextInput
           autoCapitalize='true'
@@ -112,6 +113,7 @@ const styles = StyleSheet.create({
   userPic: {
     width: 80,
     height: 80,
+    borderRadius: 40,
   },
   subContainer: {
     width: '100%',

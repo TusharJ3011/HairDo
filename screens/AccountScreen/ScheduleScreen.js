@@ -5,14 +5,24 @@ import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 
 
-export const BookingScreen = ({navigation}) => {
-    let user = '20ucs211';
+export const ScheduleScreen = ({route, navigation}) => {
+    let shopid = route.params?.shop;
     const [data, setData] = useState([]);
     const getData = async() => {
-        let user_data = await firestore().collection('users').doc(user).get();
-        // console.log(user_data);
-        if (user_data._exists){
-            setData(user_data._data.bookings)
+        let date = new Date();
+        let dateStr = ('0'+date.getDate()).slice(-2) + "-" + (date.getMonth()+1) + '-' + date.getFullYear();
+        // console.log(dateStr);
+        dateStr = '25-11-2022'
+        let schedule_data = await firestore().collection('schedule').doc(shopid).get();
+        if (schedule_data._exists){
+            let scheduleData = []
+            Object.entries(schedule_data._data[dateStr]).map(([k,v]) => {
+                Object.entries(v).map(([k1,v1]) => {
+                    scheduleData.push([(k+":"+k1), v1])  
+                });
+            });
+            setData(scheduleData);
+            // console.log(scheduleData);
         }
     }
 
@@ -20,29 +30,15 @@ export const BookingScreen = ({navigation}) => {
         getData();
     }, [])
 
-
-    let booking_data = []
-    data.map((item)=>{
-        var itemTemp = item;
-        var bookDate = new Date(item.date.seconds*1000);
-        console.log(bookDate);
-        var bookDateStr = bookDate.getDate() + "-" + bookDate.getMonth() + "-" + bookDate.getFullYear() + " at " + bookDate.getHours() + ":" + bookDate.getMinutes();
-        // console.log(bookDateStr);
-        itemTemp.date = bookDateStr;
-        booking_data.push(itemTemp)
-    });
-    // console.log(booking_data);
-
     return (
         <View style={styles.container}>
             <ScrollView>
-                {booking_data.map((item)=>{
+                {data.map((item)=>{
                 return(<Pressable style={[styles.otherButtonContainer, styles.boxShadow]} key={item.shopname+item.shopid}>
                     <View style={styles.otherButtonSubContainer}>
-                        <Image source={require("../../assets/images/account/userglobal.png")} style={styles.otherButtonImage}/>
                         <View>
-                            <Text style={styles.otherButtonTitle}>{item.shopname}</Text>
-                            <Text style={styles.otherButtonSubTitle}>{item.date}</Text>
+                            <Text style={styles.otherButtonTitle}>{item[0]}</Text>
+                            <Text style={styles.otherButtonSubTitle}>{item[1].name}</Text>
                         </View>
                     </View>
                     <Image source={require("../../assets/images/icons/rightarrow.png")} style={styles.otherButtonImage2}/>
