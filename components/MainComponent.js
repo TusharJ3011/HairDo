@@ -10,13 +10,16 @@ import { AboutScreen } from '../screens/AccountScreen/AboutScreen';
 import { BookingScreen } from '../screens/AccountScreen/BookingScreen';
 import { OfferScreen } from '../screens/OffersScreen/OfferScreen';
 import { AvailOfferScreen } from '../screens/OffersScreen/AvailOfferScreen';
+import { LoginScreen } from '../screens/LoginScreen/LoginScreen';
+import { SignUpScreen } from '../screens/LoginScreen/SignUpScreen';
+import { EditProfileScreen } from '../screens/AccountScreen/EditProfileScreen';
 // import {BookingDetailsScreen} from '../screens/AcountScreen.BookingDetailsScreen'
 
 export const MainContainer = () => {
     const MainStack = createStackNavigator();
     return (
         // <NavigationContainer>
-        <MainStack.Navigator initialRouteName='Home'
+        <MainStack.Navigator initialRouteName='Edit Profile'
         screenOptions={{
         presentation:'modal',
         // gestureEnabled:true,
@@ -27,6 +30,9 @@ export const MainContainer = () => {
         },
         }}
         >
+            <MainStack.Screen name="Login" component={LoginScreen} />
+            <MainStack.Screen name="Sign Up" component={SignUpScreen} />
+            <MainStack.Screen name="Edit Profile" component={EditProfileScreen} />
             <MainStack.Screen name="Home" component={HomeScreen} />
             <MainStack.Screen name="Account" component={AccountScreen} />
             <MainStack.Screen name="About" component={AboutScreen} />
