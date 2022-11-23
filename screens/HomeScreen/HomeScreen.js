@@ -3,9 +3,50 @@ import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView, Platf
 import { useContext, useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
+import { _signIn } from '../../components/FirebaseAuth';
 
 export const HomeScreen = ({navigation}) => {
-    const Item = () => {
+    // let user = '20ucs211';
+    // let temp = {_data:{name: '',
+    //             email:"",
+    //             phone:''}};
+    // const [userData, setUserData] = useState(temp);
+    const [shopList, setShopList] = useState([]);
+
+    const getShopData = async() => {
+        var shop_list = []
+        await firestore().collection('shop').get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                shop_list.push(doc)
+            })
+        })
+        console.log(shop_list);
+        setShopList(shop_list)
+
+        // if (user_data._exists){
+        //     setUserData(user_data)
+        // }
+    }
+
+    useEffect(()=>{
+        getShopData();
+    }, [])
+
+    const Item = ({data}) => {
+        let gendertype = ''
+        if (data.type[0]){
+            gendertype += "Men, "
+        }
+        if (data.type[1]){
+            gendertype += "Women, "
+        }
+        if (data.type[2]){
+            gendertype += "Pet, "
+        }
+
+        gendertype = gendertype.slice(0, -2)
+        console.log(gendertype);
+        console.log(data.type);
         return (
             <Pressable style={[styles.shopContainer, styles.boxShadow]}
                 onPress={()=>(navigation.navigate('Offers'))}
@@ -13,11 +54,11 @@ export const HomeScreen = ({navigation}) => {
                 <Image source={require("../../assets/images/home/shopglobal.png")} style={styles.shopImage}/>
                 <View style={styles.shopInfoContainer}>
                     <View style={styles.shopInfoSubContainer}>
-                        <Text style={styles.shopInfoTitle}>Barber Shop</Text>
-                        <Text style={styles.shopInfoSubTitle}>Unisex, Pet</Text>
+                        <Text style={styles.shopInfoTitle}>{data.name}</Text>
+                        <Text style={styles.shopInfoSubTitle}>{gendertype}</Text>
                     </View>
                     <View>
-                        <Text style={styles.shopInfoRating}>3.5 ⭐</Text>
+                        <Text style={styles.shopInfoRating}>{data.rating} ⭐</Text>
                     </View>
                 </View>
             </Pressable>
@@ -29,6 +70,7 @@ export const HomeScreen = ({navigation}) => {
             <ScrollView>
                 <Pressable style={styles.pressButton} 
                 onPress={()=>(navigation.navigate('Offers'))}
+                // onPress={()=>(_signIn().then(() => console.log('Signed in with Google!')))}
                 >
                     <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['rgba(23, 152, 199, 1)', 'rgba(26, 245, 232, 0.31)']} style={styles.linearGradient}>
                         <Text style={styles.pressText}>Offers</Text>
@@ -36,7 +78,11 @@ export const HomeScreen = ({navigation}) => {
                     </LinearGradient>
                 </Pressable>
 
-                <Item />
+                {shopList.map((item)=>{
+                    return(
+                        <Item data={item._data} key={item._data.id}/>
+                    );
+                })}
             </ScrollView>
         </View>
     )

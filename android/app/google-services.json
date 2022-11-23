@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "694605010149-egeh8pfure1ebq6loo120k051g8vh8kn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hairdo",
+            "certificate_hash": "925ad591b1657afc26e9185f784e4f6caf35160a"
+          }
+        },
+        {
           "client_id": "694605010149-61g9h8frua88elncb0bo0ilpf63npc5k.apps.googleusercontent.com",
           "client_type": 3
         }

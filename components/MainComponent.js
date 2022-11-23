@@ -16,7 +16,7 @@ export const MainContainer = () => {
     const MainStack = createStackNavigator();
     return (
         // <NavigationContainer>
-        <MainStack.Navigator initialRouteName='Account'
+        <MainStack.Navigator initialRouteName='Home'
         screenOptions={{
         presentation:'modal',
         // gestureEnabled:true,
