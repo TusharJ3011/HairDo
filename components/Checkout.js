@@ -1,34 +1,20 @@
 import firestore from '@react-native-firebase/firestore';
 
-const checkSchedule = async(shop, date, hour, minute) => {
+const checkSchedule = async(shop, date, hour) => {
     let schedule_data = await firestore().collection('schedule').doc(shop).get();
     if (schedule_data._exists){
         if (schedule_data._data[date] !== undefined){
             if (schedule_data._data[date][hour] !== undefined){
-                if (schedule_data._data[date][hour][minute] !== undefined){
-                    return true
-                }
+                return false
             }
         }
     }
-    return false;
-}
-
-let tempData = {
-    user:'',
-    shop:'',
-    shopname:'',
-    services:[{name:'', price:''}],
-    price:'',
-    date:'',
-    hour:'',
-    minute:'',
-    name:'',
-    phone:''
+    return true;
 }
 
 const makeApppointment = async(data) => {
-    let isAvailable = checkSchedule(data.shop, data.date, data.hour, data.minute);
+    let isAvailable = await checkSchedule(data.shop, data.date, data.hour);
+    console.log(isAvailable);
     if (isAvailable){
         const scheduleAddData = {
             name:data.name,
@@ -36,12 +22,11 @@ const makeApppointment = async(data) => {
             price: data.price,
             services:data.services
         };
-        22-02-2022
 
-        let convDate = new Date(data.date.slice(6), data.date.slice(3,5), data.date.slice(0,2), data.hour, data.minute)
+        let convDate = new Date(data.date.slice(6), parseInt(data.date.slice(3,5))-1, data.date.slice(0,2), data.hour, '00')
         const userAddData = {
             date:convDate,
-            prices:data.prices,
+            price:data.price,
             services:data.services,
             shopid:data.shop,
             shopname:data.shopname
@@ -51,9 +36,25 @@ const makeApppointment = async(data) => {
         let schedule_data = await firestore().collection('schedule').doc(data.shop).get();
         let user_data = await firestore().collection('users').doc(data.user).get();
         if (schedule_data._exists){
-            schedule_data._data[data.date][data.hour][data.minute] = scheduleAddData;
+            console.log('here');
+            console.log(schedule_data._data[data.date]);
+            if (schedule_data._data[data.date] !== undefined){
+                if (schedule_data._data[data.date][data.hour] === undefined){
+                    schedule_data._data[data.date][data.hour] = scheduleAddData
+                }
+            }else{
+                let temp = {[data.hour]:scheduleAddData}
+                schedule_data._data[data.date] = temp
+            }
+            // schedule_data._data[data.date][data.hour] = scheduleAddData;
+            console.log('here2');
+            console.log(schedule_data);
+            console.log('here4');
             if (user_data._exists){
-                user_data._data.bookings.push(userAddData)
+                let userDataClone = user_data._data
+                userDataClone.bookings.push(userAddData)
+
+                console.log("here5");
 
                 firestore()
                 .collection('schedule')
@@ -63,21 +64,34 @@ const makeApppointment = async(data) => {
                     console.log('Schedule Updated');
                 });
 
+                console.log('here6');
+
                 firestore()
                 .collection('users')
                 .doc(data.user)
-                .set(user_data._data)
+                .set(userDataClone)
                 .then(() => {
                     console.log('User Updated');
                 });
 
-                return true;
+                return {
+                    success: true,
+                };
+            }
+            return {
+                success: false,
+                reason: 'An error occured. Try again later!'
             }
         }
     }
-    return false;
+    return {
+        success: false,
+        reason: "There is already an appointment for the required time!"
+    };
 }
 
 const doCheckout = () => {
     makeApppointment.then(alert('Schedule Made'));
 }
+
+export {makeApppointment};

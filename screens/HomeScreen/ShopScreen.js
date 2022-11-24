@@ -3,9 +3,13 @@ import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView, Platf
 import { useContext, useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
+import { GlobalContext } from '../../components/Context';
 import { _signIn } from '../../components/FirebaseAuth';
 
 export const ShopScreen = ({ route, navigation }) => {
+    const globalContext = useContext(GlobalContext);
+    let user = globalContext.userid;
+    let username = globalContext.username;
     // let user = '20ucs211';
     let temp = {
         name: '',
@@ -70,6 +74,22 @@ export const ShopScreen = ({ route, navigation }) => {
             setPriceList(priceListClone);
             setNetPrice(netPrice - price);
         }
+    }
+
+    const proceedAppoint = () => {
+        let tempServices = []
+        for (var i=0; i<serviceList.length; i++){
+            tempServices.push({name:serviceList[i], price:priceList[i]})
+        }
+        let data = {
+            user:user,
+            shop:shopData.id,
+            shopname:shopData.name,
+            services:tempServices,
+            price:netPrice,
+            name:username,
+        }
+        navigation.navigate('Checkout', {data:data});
     }
 
     const Item = ({ data, ind }) => {
@@ -140,7 +160,7 @@ export const ShopScreen = ({ route, navigation }) => {
             <Pressable
                 style={styles.checkoutButton}
                 onPress={() => {
-                    navigation.navigate("Checkout");
+                    proceedAppoint();
                 }}
             >
                 <Text style={styles.checkoutButtonText}>Make a Appointment</Text>

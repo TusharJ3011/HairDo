@@ -11,16 +11,17 @@ export const ScheduleScreen = ({route, navigation}) => {
     const getData = async() => {
         let date = new Date();
         let dateStr = ('0'+date.getDate()).slice(-2) + "-" + (date.getMonth()+1) + '-' + date.getFullYear();
-        // console.log(dateStr);
-        dateStr = '25-11-2022'
+        console.log(dateStr);
+        // dateStr = '25-11-2022'
         let schedule_data = await firestore().collection('schedule').doc(shopid).get();
         if (schedule_data._exists){
             let scheduleData = []
-            Object.entries(schedule_data._data[dateStr]).map(([k,v]) => {
-                Object.entries(v).map(([k1,v1]) => {
-                    scheduleData.push([(k+":"+k1), v1])  
+            if(schedule_data._data[dateStr] !== undefined){
+                Object.entries(schedule_data._data[dateStr]).map(([k,v]) => {
+                    scheduleData.push([(k+":"+'00'), v])  
                 });
-            });
+            }
+
             setData(scheduleData);
             // console.log(scheduleData);
         }

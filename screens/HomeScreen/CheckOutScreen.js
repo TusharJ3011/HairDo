@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, Dimensions, ScrollView, Platform, TextInput } from 'react-native';
 import { useContext, useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 import { Dropdown } from 'react-native-element-dropdown';
 import moment from 'moment';
+import { makeApppointment } from '../../components/Checkout';
 
 export const CheckOutScreen = ({ route, navigation }) => {
-  const data = route.params;
+  const data = route.params?.data;
   // console.log(data);
 
   // useEffect(()=>{
@@ -21,34 +22,60 @@ export const CheckOutScreen = ({ route, navigation }) => {
       <View style={[styles.serviceContainer, styles.boxShadow]}>
         <View style={styles.serviceInfoContainer}>
           <View style={styles.serviceInfoSubContainer}>
-            <Text style={styles.serviceTitle}>Haircut</Text>
+            <Text style={styles.serviceTitle}>{dataItem.name}</Text>
           </View>
         </View>
         <View style={styles.serviceImageContainer}>
-          <Text style={styles.serviceTitle}>₹ 500</Text>
+          <Text style={styles.serviceTitle}>₹ {dataItem.price}</Text>
         </View>
       </View>
     )
   }
 
   const data_hour = [
-    { label: '10:00', value: '1' },
-    { label: '11:00', value: '2' },
-    { label: '12:00', value: '3' },
-    { label: '13:00', value: '4' },
-    { label: '14:00', value: '5' },
-    { label: '15:00', value: '6' },
+    { label: '10:00', value: '10:00' },
+    { label: '11:00', value: '11:00' },
+    { label: '12:00', value: '12:00' },
+    { label: '13:00', value: '13:00' },
+    { label: '14:00', value: '14:00' },
+    { label: '15:00', value: '15:00' },
+    { label: '16:00', value: '16:00' },
+    { label: '17:00', value: '17:00' },
   ];
 
   const [hour, setHour] = useState(null);
   const [date, setDate] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  const [phno, setPhno] = useState('')
 
   const dateList = []
 
   for (let i = 0; i <= 7; i += 1) {
     let date = moment().add(i, 'd').format('DD-MM-YYYY');
-    dateList.push({ label: date, value: (i + 1).toString() })
+    dateList.push({ label: date, value: date })
+  }
+  // console.log(dateList);
+
+  const makeAppoint = async() =>{
+    if (hour !== null && date !== null && phno !== ''){
+      data['hour'] = hour.slice(0,2)
+      data['date'] = date
+      data['phone'] = phno
+      console.log(data);
+      let out = await makeApppointment(data);
+      if (out.success){
+        alert('Apointment made');
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Home'}],
+        });
+      }else{
+        alert(out.reason)
+      }
+
+    }else{
+      alert("Please fill the form!")
+    }
   }
 
   return (
@@ -56,19 +83,19 @@ export const CheckOutScreen = ({ route, navigation }) => {
       <ScrollView>
         <View style={[styles.shopContainer]}>
           <View style={styles.shopInfoContainer}>
-            <Text style={styles.shopInfoTitle}>Style Era</Text>
-            <Text style={styles.shopInfoSubTitle}>₹ 500</Text>
+            <Text style={styles.shopInfoTitle}>{data.shopname}</Text>
+            <Text style={styles.shopInfoSubTitle}>₹ {data.price}</Text>
           </View>
         </View>
         <Text style={styles.servicesHead}>Services:</Text>
 
-        {/* {data.services.map((item, index)=>{
+        {data.services.map((item, index)=>{
                     return(
                         <Item dataItem={item} key={index}/>
                     );
-                })} */}
-        <Item />
-        <Item />
+                })}
+        {/* <Item />
+        <Item /> */}
         <Dropdown
           style={[styles.dropdown, isFocus]}
           placeholderStyle={styles.placeholderStyle}
@@ -86,7 +113,8 @@ export const CheckOutScreen = ({ route, navigation }) => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setValue(item.hour);
+            setHour(item.label);
+            console.log(hour)
             setIsFocus(false);
           }}
         />
@@ -108,13 +136,24 @@ export const CheckOutScreen = ({ route, navigation }) => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setValue(item.date);
+            setDate(item.label);
             setIsFocus(false);
           }}
+        />
+        
+        <TextInput
+          autoFocus
+          onChangeText={(e) => setPhno(e)}
+          placeholder='Phone Number'
+          style={styles.inpBox}
+          keyboardType="number-pad"
         />
 
         <Pressable
           style={styles.cta}
+          onPress={()=>{
+            makeAppoint();
+          }}
         >
           <Text style={styles.checkoutButtonText}>Make a Appointment</Text>
         </Pressable>
@@ -131,6 +170,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     height: "100%",
     alignItems: 'center',
+  },
+
+  inpBox: {
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'black',
+    marginBottom: 4,
   },
 
   shopContainer: {

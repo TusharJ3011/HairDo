@@ -28,7 +28,7 @@ export const BookingScreen = ({navigation}) => {
         var itemTemp = item;
         var bookDate = new Date(item.date.seconds*1000);
         console.log(bookDate);
-        var bookDateStr = bookDate.getDate() + "-" + bookDate.getMonth() + "-" + bookDate.getFullYear() + " at " + bookDate.getHours() + ":" + bookDate.getMinutes();
+        var bookDateStr = ('0'+bookDate.getDate()).slice(-2) + "-" + bookDate.getMonth() + "-" + bookDate.getFullYear() + " at " + ('0'+bookDate.getHours()).slice(-2) + ":" + ('0'+bookDate.getMonth()).slice(-2);
         // console.log(bookDateStr);
         itemTemp.date = bookDateStr;
         booking_data.push(itemTemp)
@@ -38,8 +38,8 @@ export const BookingScreen = ({navigation}) => {
     return (
         <View style={styles.container}>
             <ScrollView>
-                {booking_data.map((item)=>{
-                return(<Pressable style={[styles.otherButtonContainer, styles.boxShadow]} key={item.shopname+item.shopid}
+                {booking_data.map((item, index)=>{
+                return(<Pressable style={[styles.otherButtonContainer, styles.boxShadow]} key={index}
                 onPress={()=>{
                     navigation.navigate("Booking Details", {shopname:item.shopname, date:item.date, price:item.price, services:item.services})
                 }}
