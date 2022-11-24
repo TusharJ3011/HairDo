@@ -5,13 +5,15 @@ import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 import { _signIn } from '../../components/FirebaseAuth';
 
-export const ShopScreen = ({route, navigation}) => {
+export const ShopScreen = ({ route, navigation }) => {
     // let user = '20ucs211';
-    let temp = {name: '',
-                rating:"",
-                address:'',
-                gendertype: '',
-                services:[]};
+    let temp = {
+        name: '',
+        rating: "",
+        address: '',
+        gendertype: '',
+        services: []
+    };
     // const [userData, setUserData] = useState(temp);
     const [shopData, setShopData] = useState(temp);
     const [serviceList, setServiceList] = useState([]);
@@ -19,23 +21,23 @@ export const ShopScreen = ({route, navigation}) => {
     const [netPrice, setNetPrice] = useState(0);
     const [cardData, setCardData] = useState([]);
 
-    const getShopData = async() => {
+    const getShopData = async () => {
         const shop_data = await firestore().collection('shop').doc(route.params?.shopid).get();
-        if (shop_data._exists){
+        if (shop_data._exists) {
             let gendertype = '';
-            if (shop_data._data.type[0]){
+            if (shop_data._data.type[0]) {
                 gendertype += "Men, ";
             }
-            if (shop_data._data.type[1]){
+            if (shop_data._data.type[1]) {
                 gendertype += "Women, ";
             }
-            if (shop_data._data.type[2]){
+            if (shop_data._data.type[2]) {
                 gendertype += "Pet, ";
             }
             gendertype = gendertype.slice(0, -2)
             shop_data._data.gendertype = gendertype;
             let temp_list = []
-            for (var i=0; i<shop_data._data.services.length; i++){
+            for (var i = 0; i < shop_data._data.services.length; i++) {
                 temp_list.push(["#1798C7", "Add"]);
             }
             setCardData(temp_list);
@@ -47,7 +49,7 @@ export const ShopScreen = ({route, navigation}) => {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getShopData();
     }, []);
 
@@ -55,12 +57,12 @@ export const ShopScreen = ({route, navigation}) => {
         var serviceListClone = serviceList;
         var priceListClone = priceList;
         var index = serviceListClone.indexOf(service);
-        if (index === -1){
+        if (index === -1) {
             serviceListClone.push(service)
             priceListClone.push(price);
             setServiceList(serviceListClone);
             setPriceList(priceListClone);
-            setNetPrice(netPrice+price);
+            setNetPrice(netPrice + price);
         } else {
             serviceListClone.splice(index, 1);
             priceListClone.splice(index, 1)
@@ -70,17 +72,17 @@ export const ShopScreen = ({route, navigation}) => {
         }
     }
 
-    const Item = ({data, ind}) => {
+    const Item = ({ data, ind }) => {
         const onButtonPress = () => {
             var tempCardData = cardData;
-            if (tempCardData[ind][0] === '#1798C7'){
+            if (tempCardData[ind][0] === '#1798C7') {
                 tempCardData[ind][0] = 'red';
-            }else{
+            } else {
                 tempCardData[ind][0] = '#1798C7';
             }
-            if (tempCardData[ind][1] === 'Add'){
+            if (tempCardData[ind][1] === 'Add') {
                 tempCardData[ind][1] = 'Remove';
-            }else{
+            } else {
                 tempCardData[ind][1] = 'Add';
             }
             setCardData(tempCardData);
@@ -94,14 +96,14 @@ export const ShopScreen = ({route, navigation}) => {
                         <Text style={styles.serviceTitle}>{data.name}</Text>
                         <Text style={styles.servicePrice}>Rs. {data.price}</Text>
                     </View>
-                    <Pressable style={[styles.serviceButton, {backgroundColor: cardData[ind][0]}]}
-                    onPress={()=>{onButtonPress();}}
+                    <Pressable style={[styles.serviceButton, { backgroundColor: cardData[ind][0] }]}
+                        onPress={() => { onButtonPress(); }}
                     >
                         <Text style={styles.serviceButtonText}>{cardData[ind][1]}</Text>
                     </Pressable>
                 </View>
                 <View style={styles.serviceImageContainer}>
-                    <Image source={require("../../assets/images/home/shopglobal.png")} style={styles.serviceImage}/>
+                    <Image source={require("../../assets/images/home/shopglobal.png")} style={styles.serviceImage} />
                 </View>
             </View>
         )
@@ -121,9 +123,9 @@ export const ShopScreen = ({route, navigation}) => {
                     </View>
                 </View>
 
-                {shopData.services.map((item, index)=>{
-                    return(
-                        <Item data={item} ind={index} key={index}/>
+                {shopData.services.map((item, index) => {
+                    return (
+                        <Item data={item} ind={index} key={index} />
                     );
                 })}
                 {/* <Item /> */}
@@ -135,7 +137,12 @@ export const ShopScreen = ({route, navigation}) => {
             <View style={styles.netPriceContainer}>
                 <Text style={styles.netPriceContainerText}>₹ {netPrice}</Text>
             </View>
-            <Pressable style={styles.checkoutButton}>
+            <Pressable
+                style={styles.checkoutButton}
+                onPress={() => {
+                    navigation.navigate("Checkout");
+                }}
+            >
                 <Text style={styles.checkoutButtonText}>Make a Appointment</Text>
             </Pressable>
         </View>
@@ -144,15 +151,15 @@ export const ShopScreen = ({route, navigation}) => {
 
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         backgroundColor: 'white',
         display: 'flex',
         height: "100%",
         alignItems: 'center',
     },
 
-    shopContainer:{
-        width: Dimensions.get("window").width -20,
+    shopContainer: {
+        width: Dimensions.get("window").width - 20,
         backgroundColor: "white",
         margin: 10,
         borderRadius: 10,
@@ -163,10 +170,10 @@ const styles = StyleSheet.create({
         padding: 20,
     },
 
-    shopInfoContainer:{
+    shopInfoContainer: {
     },
 
-    shopInfoRatingContainer:{
+    shopInfoRatingContainer: {
         paddingHorizontal: 10,
         justifyContent: 'center',
         backgroundColor: '#83f285',
@@ -174,13 +181,13 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
 
-    shopInfoRatingText:{
+    shopInfoRatingText: {
         fontSize: 15,
         color: 'black',
         fontWeight: '500',
     },
 
-    shopInfoTitle:{
+    shopInfoTitle: {
         fontSize: 30,
         fontWeight: 'bold',
         margin: 0,
@@ -188,14 +195,14 @@ const styles = StyleSheet.create({
         color: 'black',
     },
 
-    shopInfoSubTitle:{
+    shopInfoSubTitle: {
         fontSize: 15,
         paddingVertical: 5,
         color: '#777777',
     },
 
-    serviceContainer:{
-        width: Dimensions.get("window").width -20,
+    serviceContainer: {
+        width: Dimensions.get("window").width - 20,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -205,53 +212,53 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
 
-    serviceInfoContainer:{
+    serviceInfoContainer: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         margin: 10,
     },
 
-    serviceInfoSubContainer:{},
+    serviceInfoSubContainer: {},
 
-    serviceTitle:{
+    serviceTitle: {
         fontSize: 20,
         color: 'black',
         fontWeight: 'bold',
     },
 
-    servicePrice:{
+    servicePrice: {
         fontSize: 15,
         color: 'black'
     },
 
-    serviceButton:{
+    serviceButton: {
         padding: 5,
         borderRadius: 50,
         alignItems: 'center',
     },
 
-    serviceButtonText:{
+    serviceButtonText: {
         color: 'white',
     },
 
-    serviceImageContainer:{},
+    serviceImageContainer: {},
 
-    serviceImage:{
+    serviceImage: {
         width: 100,
         height: 100,
         resizeMode: 'stretch',
-        overflow:'hidden',
+        overflow: 'hidden',
         margin: 0,
         padding: 0,
         borderTopRightRadius: 10,
         borderBottomRightRadius: 10,
     },
 
-    boxShadow:{},
+    boxShadow: {},
 
-    checkoutButton:{
-        width: Dimensions.get("window").width -20,
+    checkoutButton: {
+        width: Dimensions.get("window").width - 20,
         padding: 20,
         alignItems: 'center',
         justifyContent: 'center',
@@ -260,20 +267,21 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
 
-    checkoutButtonText:{
+    checkoutButtonText: {
         fontSize: 20,
         fontWeight: 'bold',
+        color: 'white'
     },
 
-    netPriceContainer:{
-        width: Dimensions.get("window").width -20,
+    netPriceContainer: {
+        width: Dimensions.get("window").width - 20,
         padding: 5,
         alignItems: 'flex-end',
         justifyContent: 'center',
         marginBottom: 5,
     },
 
-    netPriceContainerText:{
+    netPriceContainerText: {
         fontSize: 20,
         fontWeight: 'bold',
         color: 'black',
@@ -282,18 +290,18 @@ const styles = StyleSheet.create({
 
 const generateBoxShadowStyle = (xOffset, yOffset, shadowColorIos, shadowOpacity, shadowRadius, elevation, shadowColorAndroid,) => {
     if (Platform.OS === 'ios') {
-      styles.boxShadow = {
-        shadowColor: shadowColorIos,
-        shadowOffset: {width: xOffset, height: yOffset},
-        shadowOpacity,
-        shadowRadius,
-      };
+        styles.boxShadow = {
+            shadowColor: shadowColorIos,
+            shadowOffset: { width: xOffset, height: yOffset },
+            shadowOpacity,
+            shadowRadius,
+        };
     } else if (Platform.OS === 'android') {
-      styles.boxShadow = {
-        elevation: elevation,
-        shadowColor: shadowColorAndroid,
-      };
+        styles.boxShadow = {
+            elevation: elevation,
+            shadowColor: shadowColorAndroid,
+        };
     }
-  };
+};
 
-  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');

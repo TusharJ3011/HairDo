@@ -24,6 +24,7 @@ import { ScheduleDetailsScreen } from '../screens/AccountScreen/ScheduleDetailsS
 import Header from './Header';
 import { OpenSourceLibrariesScreen } from '../screens/AccountScreen/OpenSourceLibrariesScreen';
 import { DevelopersScreen } from '../screens/AccountScreen/DevelopersScreen';
+import { CheckOutScreen } from '../screens/HomeScreen/CheckOutScreen';
 // import {BookingDetailsScreen} from '../screens/AcountScreen.BookingDetailsScreen'
 
 export const MainContainer = () => {
@@ -62,6 +63,7 @@ export const MainContainer = () => {
             <MainStack.Screen name="Schedule" component={ScheduleScreen} />
             <MainStack.Screen name="Schedule Details" component={ScheduleDetailsScreen} />
             {/* <MainStack.Screen name="Booking Details" component={BookingDetailsScreen} /> */}
+            <MainStack.Screen name="Checkout" component={CheckOutScreen} />
             <MainStack.Screen name="Offers" component={OfferScreen} />
             <MainStack.Screen name="Avail Offer" component={AvailOfferScreen} />
             <MainStack.Screen name="Coming Soon" component={ComingSoonScreen} />
